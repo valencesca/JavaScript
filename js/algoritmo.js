@@ -1,7 +1,9 @@
-let operacion = prompt("Seleccione una opreacion: \n+\n-\n*\n/");
+let operacion;
 let numero;
 let numero2;
 let total;
+
+operacion = prompt("Seleccione una opreacion: \n+\n-\n*\n/");
 
 while (operacion !="+" && operacion !="-" && operacion !="*" && operacion !="/"){
     operacion = prompt("Error. Seleccione una opreacion correcta: \n+\n-\n*\n/");
