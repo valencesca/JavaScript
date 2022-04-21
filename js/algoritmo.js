@@ -4,7 +4,7 @@ let numero2;
 let total;
 
 while (operacion !="+" && operacion !="-" && operacion !="*" && operacion !="/"){
-    operacion = prompt(typeof(operacion)+"Error. Seleccione una opreacion correcta: \n+\n-\n*\n/");
+    operacion = prompt("Error. Seleccione una opreacion correcta: \n+\n-\n*\n/");
 }
 
 numero = prompt("Ingrese 'q' para salir. \nIngrese un numero: ");
