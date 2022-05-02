@@ -1,97 +1,119 @@
-function elegirProducto() {
-    let msg = "Escriba una opcion: \n-Zapatillas \n-Remeras \n-Salir";
-    let producto = prompt(msg);
-    while (producto.toLowerCase() !== "zapatillas" && producto.toLowerCase() !== "remeras" && producto.toLowerCase() !== "salir") {
-        producto = prompt("Ingrese una opcion válida\n"+ msg);
+function elegirProducto(opciones) {
+
+    let msg = "Escriba una opcion: \n";
+    let size = opciones.length;
+
+    for(i = 0;i<opciones.length;i++){
+        msg = msg+(i+1)+") "+opciones[i]+"\n";
     }
-    return producto;
+    let producto = prompt(msg);
+    producto = validarNumeros(producto,size,msg);
+
+    return opciones[producto-1].toLowerCase();
 }
-function validarNumeros(numero, producto){
-    let msg = "\nIngrese el numero del producto:  ";
 
-    while (numero != 1 && numero != 2 && numero != 3 && numero != 4){
+function validarNumeros(numero,size,msg){
+    let esNumero = isNaN(parseInt(numero));
+
+    while (esNumero || numero > size){
         alert("Ingrese una opcion válida");
-
-        if(producto == "remera"){
-            numero = prompt("REMERAS\n 1) Negra --- $500 \n 2) Gris -- $800\n 3) Blanca -- $600\n 4) Elegir otro producto"+msg);
-        }
-        else{
-            numero = prompt("ZAPATILLAS\n 1) Air Force 1 Blancas --- $18000 \n 2) Jordan -- $25000\n 3) Adidas Superstar -- $12000\n 4) Elegir otro producto"+msg);
-        }
+    
+        numero = prompt(msg);
     }
     return numero;
 }
-function seleccionarRemeras(producto){
+function mostrarListaProductos(producto,lista){
+    let msg = producto.toUpperCase()+"\n";
+
+    for(i = 0;i<lista.length;i++){
+        msg = msg+(i+1)+") "+lista[i].nombre+" --- $"+lista[i].precio+ "\n";
+    }
+    return msg;
+}
+function seleccionarProductos(producto,lista){
+
     let precio;
-    let remeras = prompt("REMERAS\n 1) Negra --- $500 \n 2) Gris -- $800\n 3) Blanca -- $600\n 4) Elegir otro producto \nIngrese el numero del producto:  ");
-    remeras = validarNumeros(remeras,"remera");
-    switch (remeras) {
-        case "1":
-            precio = 500;
-            break;
-        case "2":
-            precio = 800;
-            break;
-        case "3":
-            precio = 600;
-            break;
-        case "4":
-            precio = -1;
+    let size = lista.length+1;
+   
+    let msg = mostrarListaProductos(producto,lista);
+
+    msg = msg +(lista.length+1)+") Elegir otro producto \n";
+
+    let eleccion = prompt(msg);
+    eleccion = validarNumeros(eleccion,size,msg);
+
+    if(eleccion > lista.length){
+        precio = -1;
+    }
+    else{
+        precio = lista[eleccion-1].precio;
     }
     return precio;
 }
 
-function seleccionarZapatillas(producto) {
-    let precio;
-    let zapas = prompt("ZAPATILLAS\n 1) Air Force 1 Blancas --- $18000 \n 2) Jordan -- $25000\n 3) Adidas Superstar -- $12000\n 4) Elegir otro producto\nIngrese el numero del producto:  ");
-    zapas = validarNumeros(zapas,"zapatilla");
-    switch (zapas) {
-        case "1":
-            precio = 18000;
-            break;
-        case "2":
-            precio = 25000;
-            break;
-        case "3":
-            precio = 12000;
-            break;
-        case "4":
-            precio = -1;
-    }
-    return precio;
-}
-function correrRemeras(producto,total){
-    precio = seleccionarRemeras(producto);
+function correrProductos(producto,total,lista){
+    precio = seleccionarProductos(producto,lista);
     while (precio != -1) {
         total = suma(total,precio);
         alert("Carrito: "+total);
-        precio = seleccionarRemeras(producto);
+        precio = seleccionarProductos(producto,lista);
     }
     return total;
 }
-function correrZapatillas(producto,total){
 
-    precio = seleccionarZapatillas(producto);
-    while (precio != -1) {
-        total = suma(total,precio);
-        alert("Carrito: "+total);
-        precio = seleccionarZapatillas(producto);
+function agregarProducto(producto, lista) {
+    let nombre = prompt("Ingrese el nombre del producto: ");
+    let precio = parseInt(prompt("Ingrese el precio del producto: "));
+
+    while(isNaN(precio)){
+        precio = parseInt(prompt("No ingresó un numero. \nIngrese un precio valido: "));
     }
-    return total;
+
+    lista.push(new Producto(nombre,precio));
+    let msg = mostrarListaProductos(producto,lista);
+    alert("Se agrego correctamente.\n"+msg);
+}
+
+class Producto{
+    constructor(nombre, precio){
+        this.nombre = nombre;
+        this.precio = precio;
+    }
 }
 
 const suma = (total,precio) => total + precio;
 
+
 let salir = false;
 let total = 0;
+let opciones = ["Zapatillas", "Remeras", "Agregar productos" ,"Salir"];
+let productos = ["Zapatillas", "Remeras"];
+let remeras = [];
+let zapatillas = [];
+
+remeras.push(new Producto("negra",500));
+remeras.push(new Producto("gris",800));
+remeras.push(new Producto("blanca",600));
+zapatillas.push(new Producto("Air Force 1 Blancas",18000));
+zapatillas.push(new Producto("Jordan",25000));
+zapatillas.push(new Producto("Adidas Superstar",12000));
 
 while(!salir){
-    let producto = elegirProducto();
+    let producto = elegirProducto(opciones);
     if (producto == "remeras"){
-        total = correrRemeras(producto,total);
+        total = correrProductos(producto,total,remeras);
     }
     else if(producto == "zapatillas"){
-        total = correrZapatillas(producto,total);
+        total = correrProductos(producto,total,zapatillas);
+    }
+    else if(producto == "agregar productos"){
+        let nuevoProd = elegirProducto(productos);
+        if (nuevoProd == "remeras"){
+            agregarProducto(nuevoProd,remeras);
+        }
+        else{
+            agregarProducto(nuevoProd,zapatillas);
+        }
     }
     else{
         salir = true;
