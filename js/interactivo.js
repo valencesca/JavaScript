@@ -63,13 +63,13 @@ function correrProductos(producto,total,lista){
 
 function agregarProducto(producto, lista) {
     let nombre = prompt("Ingrese el nombre del producto: ");
-    let precio = parseInt(prompt("Ingrese el precio del producto: "));
+    let precio = prompt("Ingrese el precio del producto: ");
 
-    while(isNaN(precio)){
-        precio = parseInt(prompt("No ingresó un numero. \nIngrese un precio valido: "));
+    while(isNaN(parseInt(precio))){
+        precio = prompt("No ingresó un numero. \nIngrese un precio valido: ");
     }
+    lista.push(new Producto(nombre,parseInt(precio)));
 
-    lista.push(new Producto(nombre,precio));
     let msg = mostrarListaProductos(producto,lista);
     alert("Se agrego correctamente.\n"+msg);
 }
