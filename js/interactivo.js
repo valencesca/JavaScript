@@ -13,9 +13,8 @@ function elegirProducto(opciones) {
 }
 
 function validarNumeros(numero,size,msg){
-    let esNumero = isNaN(parseInt(numero));
 
-    while (esNumero || numero > size){
+    while (isNaN(parseInt(numero)) || numero > size){
         alert("Ingrese una opcion válida");
     
         numero = prompt(msg);
@@ -31,7 +30,6 @@ function mostrarListaProductos(producto,lista){
     return msg;
 }
 function seleccionarProductos(producto,lista){
-
     let precio;
     let size = lista.length+1;
    
@@ -46,16 +44,18 @@ function seleccionarProductos(producto,lista){
         precio = -1;
     }
     else{
-        precio = lista[eleccion-1].precio;
+        precio = lista[eleccion-1];
     }
     return precio;
 }
 
-function correrProductos(producto,total,lista){
+function correrProductos(producto,total,lista,carrito){
     precio = seleccionarProductos(producto,lista);
     while (precio != -1) {
-        total = suma(total,precio);
-        alert("Carrito: "+total);
+        total = suma(total,precio.precio);
+        carrito.push(precio);
+        msg = mostrarListaProductos("carrito",carrito);
+        alert(msg+"\n\ TOTAL: $"+total);
         precio = seleccionarProductos(producto,lista);
     }
     return total;
@@ -63,8 +63,10 @@ function correrProductos(producto,total,lista){
 
 function agregarProducto(producto, lista) {
     let nombre = prompt("Ingrese el nombre del producto: ");
+    while (lista.some((el) => el.nombre.toLowerCase()==nombre)) {
+        nombre = prompt("El producto ya existe. \nIngrese el nombre del producto: ");
+    }
     let precio = prompt("Ingrese el precio del producto: ");
-
     while(isNaN(parseInt(precio))){
         precio = prompt("No ingresó un numero. \nIngrese un precio valido: ");
     }
@@ -72,6 +74,20 @@ function agregarProducto(producto, lista) {
 
     let msg = mostrarListaProductos(producto,lista);
     alert("Se agrego correctamente.\n"+msg);
+}
+
+function borrarProducto(carrito,total) {
+    let msg = mostrarListaProductos("Carrito",carrito);
+    
+    msg = msg + "Elija el producto que desea borrar: ";
+
+    borrar = prompt(msg);
+    borrar = validarNumeros(borrar,carrito.length,msg);
+    
+    let precio = carrito[borrar-1].precio;
+    carrito.splice(borrar-1,1);
+
+    return total-precio;
 }
 
 class Producto{
@@ -86,10 +102,11 @@ const suma = (total,precio) => total + precio;
 
 let salir = false;
 let total = 0;
-let opciones = ["Zapatillas", "Remeras", "Agregar productos" ,"Salir"];
-let productos = ["Zapatillas", "Remeras"];
-let remeras = [];
-let zapatillas = [];
+const opciones = ["Zapatillas", "Remeras", "Agregar productos", "Carrito","Borrar producto de carrito" ,"Finalizar"];
+const productos = ["Zapatillas", "Remeras"];
+const remeras = [];
+const zapatillas = [];
+const carrito = [];
 
 remeras.push(new Producto("negra",500));
 remeras.push(new Producto("gris",800));
@@ -101,10 +118,10 @@ zapatillas.push(new Producto("Adidas Superstar",12000));
 while(!salir){
     let producto = elegirProducto(opciones);
     if (producto == "remeras"){
-        total = correrProductos(producto,total,remeras);
+        total = correrProductos(producto,total,remeras,carrito);
     }
     else if(producto == "zapatillas"){
-        total = correrProductos(producto,total,zapatillas);
+        total = correrProductos(producto,total,zapatillas,carrito);
     }
     else if(producto == "agregar productos"){
         let nuevoProd = elegirProducto(productos);
@@ -113,6 +130,19 @@ while(!salir){
         }
         else{
             agregarProducto(nuevoProd,zapatillas);
+        }
+    }
+    else if (producto == "carrito") {
+        let carro = mostrarListaProductos("Carrito",carrito);
+        alert(carro+"\n\ TOTAL: $"+total);
+        
+    }
+    else if (producto == "borrar producto de carrito") {
+        if(carrito.length === 0){
+            alert("Carrito vacio")
+        }
+        else{
+            total = borrarProducto(carrito,total);
         }
     }
     else{
