@@ -89,6 +89,20 @@ function borrarProducto(carrito,total) {
 
     return total-precio;
 }
+function mostrarCarritoHTML(carrito,total) {
+    let div;
+    for (const el of carrito) {
+        div = document.createElement("div")
+        div.innerHTML = `<h4>${el.nombre}</h4>
+                        <h5>$${el.precio}</h5>`;
+        document.body.append(div);
+    }
+    div = document.createElement("div")
+    div.innerHTML = `<p>------------------------------------------</p>
+                    <h2>Total: $${total}</h2>`;
+    document.body.append(div);
+                    
+}
 
 class Producto{
     constructor(nombre, precio){
@@ -139,7 +153,7 @@ while(!salir){
     }
     else if (producto == "borrar producto de carrito") {
         if(carrito.length === 0){
-            alert("Carrito vacio")
+            alert("Carrito vacio");
         }
         else{
             total = borrarProducto(carrito,total);
@@ -147,6 +161,7 @@ while(!salir){
     }
     else{
         salir = true;
-        alert("El total es de: $"+total)
+        mostrarCarritoHTML(carrito,total);
+        alert("El total es de: $"+total);
     }
 }
