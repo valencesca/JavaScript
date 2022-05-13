@@ -104,6 +104,29 @@ function mostrarCarritoHTML(carrito,total) {
                     
 }
 
+function cargarDatos() {
+    const compra = [];
+    let form = document.getElementById("formulario");
+    form.addEventListener("submit",mostrarForm);
+    function mostrarForm(e){
+        e.preventDefault();
+        forms = e.target.children;
+        for(let i=0;i<forms.length-1;i++){
+            console.log(forms[i].children[1].value);
+            compra.push(forms[i].children[1].value);
+        }
+        mostrarDatos(compra);
+    }
+}
+
+function mostrarDatos(compra){
+    msg = `GRACIAS POR SU COMPRA ${compra[0]} ${compra[1]}!
+
+    Se enviará a ${compra[3]}  
+    Le estará llegando la factura a ${compra[2]}`
+    alert(msg);
+}
+
 class Producto{
     constructor(nombre, precio){
         this.nombre = nombre;
@@ -165,3 +188,4 @@ while(!salir){
         alert("El total es de: $"+total);
     }
 }
+cargarDatos();
