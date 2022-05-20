@@ -1,11 +1,3 @@
-function mostrarListaProductos(producto,lista){
-    let msg = producto.toUpperCase()+"\n";
-
-    for(i = 0;i<lista.length;i++){
-        msg = msg+(i+1)+") "+lista[i].nombre+" --- $"+lista[i].precio+ "\n";
-    }
-    return msg;
-}
 function mostrarLocal(carrito,total){
     let div;
     let i = carrito.length-1;
@@ -52,7 +44,7 @@ function mostrarCarritoHTML(carrito,total) {
         document.getElementById("precio").appendChild(div);
     }
     else{
-        document.getElementById("total").innerHTML = "$"+total;
+        document.getElementById("total").innerHTML = "Total: $"+total;
     }
     
 }
@@ -129,13 +121,9 @@ let compra = [];
 
 if (localStorage.length > 0) {
     let items = localStorage.getItem("carrito");
-    console.log(items);
     items = JSON.parse(items);
-    console.log(items);
     compra = items.map((x) => x);
-    console.log(compra);
     total = calcularTotal(compra);
-    console.log(total);
     mostrarLocal(compra,total);
 
 }
