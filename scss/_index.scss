@@ -1,0 +1,93 @@
+/* STORE */
+.storeBackground{
+    @include sizes ($full,$full);
+    @extend .genericBackground;
+    background-image: $bggradient;
+}
+.row{
+    
+    max-width: $full;
+    height: auto;
+  
+}
+h2{
+    margin: 0px;
+    padding-bottom: 10px;
+}
+.total{
+    text-align: center;
+}
+.producto{
+    text-align: center;
+    h4{
+        @include fontSize(2rem);
+        text-align: center;
+
+    }
+    h5{
+        text-align: center;
+    }
+}
+.borrar{
+    width: 20%;
+}
+.boton{
+    color: white;
+    border-color:black;
+    font-size: 10px;
+    text-align: center;
+}
+/*Cada producto de mi store*/
+/*Mapa que contiene cada item*/
+$shoes:(
+    nikeblancas: url(../img/nikeblancas.jpeg),
+    adidaspixar: url(../img/adidas\ pixar\ 1.jpg),
+    newbalance: url(../img/new\ balance.jpg),
+    fila: url(../img/fila\ blancas.jpg),
+    adidassuperstar: url(../img/adidas\ superstar\ W.jpg),
+    jordanblancas: url(../img/Joradan\ blancas.png),
+    nikenegras: url(../img/nike\ negras\ M.jpg),
+    jordan: url(../img/joradn.jpg),
+    yeezy: url(../img/Yeezy.jpg)
+);
+/*Recorro mapa para aplicar estilos a todos*/
+@each $sh, $url in $shoes {
+    
+    .imageContainer--#{$sh}{
+        @include sizes (30%,250px);
+        @extend .genericBackground;
+        @include images(20px,'');
+        background-image: $url;
+    }
+}
+
+/* Media querys para tamaños de pantalla responsive */
+@media (max-width: 992px) {
+    @each $sh, $url in $shoes {
+    
+        .imageContainer--#{$sh}{
+            @include sizes (40%,250px);
+
+        }
+    }
+
+} 
+
+@media (max-width: 768px) {
+    @each $sh, $url in $shoes {
+    
+        .imageContainer--#{$sh}{
+            @include sizes ($full,400px);
+
+        }
+    }
+}
+@media (max-width: 576px) {
+    @each $sh, $url in $shoes {
+    
+        .imageContainer--#{$sh}{
+            @include sizes (80%,250px);
+
+        }
+    }
+}
