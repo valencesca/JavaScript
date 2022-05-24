@@ -3,11 +3,12 @@ function mostrarLocal(carrito,total){
     let i = carrito.length-1;
     
     for (const el of carrito) {
+        const {nombre,talle,precio} = el;
         div = document.createElement("div");
         div.setAttribute("class","producto row mb-3");
-        div.innerHTML = `<h4 class = "col-3">${el.nombre}</h4>
-        <h5 class = "col-3">Talle: ${el.talle}</h5>
-        <h5 class = "col-3">$${el.precio}</h5>
+        div.innerHTML = `<h4 class = "col-3">${nombre}</h4>
+        <h5 class = "col-3">Talle: ${talle}</h5>
+        <h5 class = "col-3">$${precio}</h5>
         <button type="submit" class="col-3 borrar btn btn-dark btn-outline-info btn-lg btn-block boton">Borrar</button>`;
         document.getElementById("carrito").appendChild(div);
     }
@@ -29,10 +30,10 @@ function mostrarCarritoHTML(carrito,total) {
     let i = carrito.length-1;
     div = document.createElement("div");
     div.setAttribute("class","producto row mb-3");
-
-    div.innerHTML = `<h4 class = "col-3">${carrito[i].nombre}</h4>
-        <h5 class = "col-3">Talle: ${carrito[i].talle}</h5>
-        <h5 class = "col-3">$${carrito[i].precio}</h5>
+    const {nombre,talle,precio} = carrito[i];
+    div.innerHTML = `<h4 class = "col-3">${nombre}</h4>
+        <h5 class = "col-3">Talle: ${talle}</h5>
+        <h5 class = "col-3">$${precio}</h5>
         <button type="submit" class="col-3 borrar btn btn-dark btn-outline-info btn-lg btn-block boton">Borrar</button>`;
     
     document.getElementById("carrito").appendChild(div);
