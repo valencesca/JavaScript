@@ -60,7 +60,10 @@ function cargarDatos(zapatillas,compra) {
             precio = e.path[3].children[0].outerText.replace(/[^\w\s]/gi, '');
             talle = e.path[1][0].value;
             if(talle == "-"){
-                alert("Ingrese un talle");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ingrese un talle',
+                  })
             }
             else{
                 compra.push(new Producto(zapatillas[i],precio,talle));
@@ -81,14 +84,29 @@ function borrarProducto(compra) {
     let btns = document.getElementsByClassName("borrar");
     for (let i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", (e)=> {
-            e.preventDefault();
-            compra.splice(i,1);
-            e.remove();
+            Swal.fire({
+                title: 'Desea borrar este producto del carrito?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El producto fue removido del carrito',
+                        'success'
+                    )
+                    e.preventDefault();
+                    compra.splice(i,1);
+                    console.log(compra);
+                    compra.length > 0 ? localStorage.setItem("carrito",JSON.stringify(compra)) : localStorage.clear();
+                }
+              })
+            
         });
     }    
-    let precio = carrito[borrar-1].precio;
-
-    return total-precio;
 }
 
 function calcularTotal(compra) {
@@ -130,3 +148,4 @@ if (localStorage.length > 0) {
 }
 total = cargarDatos(zapatillas,compra);
 div = document.createElement("div");
+borrarProducto(compra);
