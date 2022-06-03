@@ -1,0 +1,157 @@
+/* Borro estilos previos */
+*{
+    margin: 0;
+    padding:0;
+}
+
+/* </ HEADER> */
+
+/* BODY */
+/*Clase para extender en backgrounds*/
+.genericBackground{
+    background-position: $bgcenter; 
+    background-repeat: $bgnorepeat;
+    background-size: $bgsize;
+}
+/*Defino tamaños*/
+@mixin sizes($width, $height) {
+
+    width: $width;
+    height: $height;
+} 
+/*Cambio border radius y ciertas cosas de ser necesarias*/  
+@mixin images($bradius, $extra) {
+
+    border-radius: $bradius;
+
+    @if ($extra == 'filter') {
+
+        filter: grayscale($full);
+    }
+
+
+    @else if ($extra == 'spacing'){
+
+        @include margin(0,6px,0,5px);
+    }
+}
+/*Cambio de font size*/
+@mixin fontSize ($size) {
+    font-size: $size;
+}
+
+@mixin padding($top, $right, $bottom, $left) {
+    padding-top: $top;
+    padding-right: $right;
+    padding-bottom: $bottom;
+    padding-left: $left;
+}
+
+/*Margin mixin*/
+@mixin margin($top, $right, $bottom, $left) {
+    margin-top: $top;
+    margin-right: $right;
+    margin-bottom: $bottom;
+    margin-left: $left;
+}
+
+/*defino tamaño de mi logo*/
+.logo{
+    @include sizes(150px,100px);
+    @include images(36px,'');
+}
+
+/* defino estilos genericos para todos los archivos */
+/* Uso esto para ver si algo se sale del contenedor y este mal */
+/* Defino los tamaños que quiero que ocupe el main */
+
+body, main{
+    @include sizes($full,$full);
+}
+
+.agrandarImg{
+    cursor: pointer;
+    transition: transform 0.5s;
+
+    &:hover{
+        transform: scale(1.2);
+    }
+    
+}
+
+h1{
+    @include fontSize(60px);
+    @include padding(10px,0 ,0 ,0 );
+    @include margin(0, 0, 0, 30px);
+    text-align: center;
+}
+
+
+/*FOOTER*/
+#footer{
+    background-color: black;
+    @include padding(50px,50px ,50px,50px);
+    
+    /* Declaro Flex para poder tener los elementos bien distribuidos en su contenedor */
+    .footer__blocks{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+
+    .footer__links{
+        img{
+            @include sizes (30px,30px);
+            @include images(10px, filter);
+        }
+    }
+    /* Mail y telefono */
+    .footer__contacto{
+        color: white;
+        display: inline-block;
+        @include fontSize(20px);
+        align-items: right;
+
+        span{
+            @include fontSize(18px);
+        }
+        img{
+            @include sizes (20px,20px);
+            @include images(10px, spacing);
+        }
+    }
+}
+
+/* </FOOTER> */
+
+/* Media querys para tamaños de pantalla responsive */
+@media (max-width: 1420px){
+    /* INDEX */
+    h1{
+        @include fontSize(40px);
+        @include padding(0,0,20px,0);
+    }
+}
+
+@media (max-width: 768px) {
+    
+    .agrandarImg{    
+        &:hover{
+            transform: none;
+        }
+    }
+}
+
+@media (max-width: 480px){
+    h1{
+        @include fontSize(25px);
+    }
+    
+    .footer__logo{
+        display: none;
+    }
+    h3{
+        @include fontSize(20px);
+    }
+}

@@ -1,0 +1,12 @@
+[
+    {"id":0,"nombre":"Nike Blancas","precio":10000},
+    {"id":1,"nombre":"Adidas Pixar","precio":11000},
+    {"id":2,"nombre":"New Balance","precio":8000},
+    {"id":3,"nombre":"Fila","precio":6000},
+    {"id":4,"nombre":"Adidas Superstar","precio":8000},
+    {"id":5,"nombre":"White Jordan´s","precio":15000},
+    {"id":6,"nombre":"Nike Negras","precio":8000},
+    {"id":7,"nombre":"Jordan","precio":15000},
+    {"id":8,"nombre":"Yeezy","precio":30000}
+    
+]
