@@ -40,15 +40,15 @@ h2{
 /*Cada producto de mi store*/
 /*Mapa que contiene cada item*/
 $shoes:(
-    nikeblancas: url(../img/nikeblancas.jpeg),
-    adidaspixar: url(../img/adidas\ pixar\ 1.jpg),
-    newbalance: url(../img/new\ balance.jpg),
-    fila: url(../img/fila\ blancas.jpg),
-    adidassuperstar: url(../img/adidas\ superstar\ W.jpg),
-    jordanblancas: url(../img/Joradan\ blancas.png),
-    nikenegras: url(../img/nike\ negras\ M.jpg),
-    jordan: url(../img/joradn.jpg),
-    yeezy: url(../img/Yeezy.jpg)
+    0: url(../img/nikeblancas.jpeg),
+    1: url(../img/adidas\ pixar\ 1.jpg),
+    2: url(../img/new\ balance.jpg),
+    3: url(../img/fila\ blancas.jpg),
+    4: url(../img/adidas\ superstar\ W.jpg),
+    5: url(../img/Joradan\ blancas.png),
+    6: url(../img/nike\ negras\ M.jpg),
+    7: url(../img/joradn.jpg),
+    8: url(../img/Yeezy.jpg)
 );
 /*Recorro mapa para aplicar estilos a todos*/
 @each $sh, $url in $shoes {
